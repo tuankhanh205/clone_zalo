@@ -33,14 +33,11 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
-        User user=userRepository.findByPhone(loginRequest.getPhone()).orElse(null);
+        User user=userRepository.findByPhone(loginRequest.getPhone()).orElseThrow(()->new NotFoundException("ko co user nay"));
         if(!loginRequest.getPhone().isEmpty()&&!loginRequest.getPassWord().isEmpty()) {
             BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-
            boolean ss=encoder.matches(loginRequest.getPassWord(),user.getPassword());
-
            if(user.getPhone().equals(loginRequest.getPhone())&&ss){
-
                    String accessToken=service.generateAccessToken(user.getPhone(),user.getRole().name());
                    String refreshToken=service.generateRefreshToken(user.getName());
                    AuthResponse.UserInfo userInfo=new AuthResponse.UserInfo().builder().role(user.getRole().name())

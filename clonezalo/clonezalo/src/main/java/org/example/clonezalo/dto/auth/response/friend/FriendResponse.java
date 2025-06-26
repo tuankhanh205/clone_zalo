@@ -1,4 +1,4 @@
-package org.example.clonezalo.dto.auth.response.friendRResponse;
+package org.example.clonezalo.dto.auth.response.friend;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendRResponse {
+public class FriendResponse {
     private Integer id;
-    private String senderName;
-    private String receiveName;
-    private String status;
+    private String name;
 }

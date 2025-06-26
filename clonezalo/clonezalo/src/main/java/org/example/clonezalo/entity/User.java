@@ -35,6 +35,7 @@ public class User extends BaseEntity implements UserDetails {
 //    )
 //    private List<Role> roles;
 
+
     @ManyToMany
     @JoinTable(
             name = "friends",
@@ -49,6 +50,13 @@ public class User extends BaseEntity implements UserDetails {
     joinColumns = @JoinColumn(name = "blocker_id"),
     inverseJoinColumns = @JoinColumn(name = "blocked_id"))
     private List<User> blockedUsers;
+
+    @OneToMany(mappedBy = "user1")
+    private List<Friend> friend1;
+
+    @OneToMany(mappedBy = "user2")
+    private List<Friend> friend2;
+
 
     @OneToMany(mappedBy = "sender")
     private List<Messages> sentMessages;
