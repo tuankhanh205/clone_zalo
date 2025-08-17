@@ -1,44 +1,45 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { login } from "../service/authService";
+import { ref } from "vue";
+import { register } from "../service/authService";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const name = ref("");
 const phone = ref("");
-const passWord = ref("");
+const password = ref("");
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   try {
-    const res = await login({
+    await register({
+      name: name.value,
       phone: phone.value,
-      passWord: passWord.value,
+      password: password.value,
     });
 
-    // Lưu token trước khi chuyển trang
-  localStorage.setItem("token", res.accessToken);
-     localStorage.setItem("userId", res.user.userId.toString());
-
-    // Chuyển hướng sang Contacts
-    await router.push({ name: 'Contacts' });
+    alert("Đăng ký thành công! Vui lòng đăng nhập.");
+    router.push({ name: "Login" });
   } catch (err) {
-    alert("Sai thông tin đăng nhập!");
+    console.error(err);
+    alert("Đăng ký thất bại! Vui lòng thử lại.");
   }
 };
 
-
-// Kiểm tra đăng nhập khi trang load
-onMounted(() => {
-  if (localStorage.getItem("token")) {
-    router.replace({ name: 'Contacts' }); // Nếu đã login thì chuyển hướng luôn
-  }
-});
 </script>
 
 <template>
   <div class="max-w-md mx-auto mt-24 p-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
     <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">
-      🔐 Đăng nhập
+      📝 Đăng ký
     </h2>
+
+    <div class="mb-5">
+      <label class="block mb-2 text-sm font-semibold text-gray-600">Tên</label>
+      <input
+        v-model="name"
+        placeholder="Nhập tên..."
+        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
+      />
+    </div>
 
     <div class="mb-5">
       <label class="block mb-2 text-sm font-semibold text-gray-600">Số điện thoại</label>
@@ -52,7 +53,7 @@ onMounted(() => {
     <div class="mb-6">
       <label class="block mb-2 text-sm font-semibold text-gray-600">Mật khẩu</label>
       <input
-        v-model="passWord"
+        v-model="password"
         type="password"
         placeholder="••••••••"
         class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
@@ -60,18 +61,17 @@ onMounted(() => {
     </div>
 
     <button
-      @click="handleLogin"
+      @click="handleRegister"
       class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold hover:scale-[1.02] hover:shadow-lg transition transform duration-200"
     >
-      Đăng nhập
+      Đăng ký
     </button>
 
     <p class="text-center text-sm text-gray-500 mt-6">
-  Chưa có tài khoản?
-  <RouterLink to="/auth/register" class="text-blue-500 hover:underline font-medium">
-    Đăng ký ngay
-  </RouterLink>
-</p>
-
+      Đã có tài khoản?
+      <router-link to="/auth/login" class="text-blue-500 hover:underline font-medium">
+        Đăng nhập
+      </router-link>
+    </p>
   </div>
 </template>

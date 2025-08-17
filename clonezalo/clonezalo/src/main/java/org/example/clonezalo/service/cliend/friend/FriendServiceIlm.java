@@ -28,8 +28,9 @@ private final UserRepository userRepository;
     }
     public FriendResponse mapToResponse(Friend friend){
         FriendResponse friendResponse=new FriendResponse();
-        friendResponse.setId(friend.getId());
+        friendResponse.setId(friend.getUser2().getId());
         friendResponse.setName(friend.getUser2().getName());
         return friendResponse;
     }
+
 }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -43,7 +45,7 @@ public class FriendRController {
     }
     //danh sách lời mời
     @GetMapping("/listfriend")
-    FriendRResponse friendInvitation(){
+    List<FriendRResponse> friendInvitation(){
         return friendRService.friendInvitation();
     }
     //hàm này là có muốn nó thành bạn bè mình ko

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,11 +49,11 @@ public class FriendRServiceIlm implements FriendRService{
     }
 
     @Override
-    public FriendRResponse friendInvitation() {
+    public List<FriendRResponse> friendInvitation() {
         String phone = SecurityContextHolder.getContext().getAuthentication().getName();
         User receiver =userRepository.findByPhone(phone).orElseThrow(()->new NotFoundException("ko có user này"));
         List<FriendR> users=friendRRepository.findByUserReceiver(receiver,FriendRStatus.PENDING);
-        return users.stream().map(this::mapToResponse).findFirst().orElseThrow(()-> new NotFoundException("ko co danh sach ban be"));
+        return users.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
     @Override
