@@ -30,7 +30,8 @@
 
     <!-- Nút khám phá -->
     <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600 transition">
-      Khám phá ngay
+    
+      <router-link to="/"> Khám phá ngay</router-link>
     </button>
   </div>
 </template>

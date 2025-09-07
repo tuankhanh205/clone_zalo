@@ -19,7 +19,7 @@ const handleLogin = async () => {
      localStorage.setItem("userId", res.user.userId.toString());
 
     // Chuyển hướng sang Contacts
-    await router.push({ name: 'Contacts' });
+    await router.push({ name: 'gioithieu' });
   } catch (err) {
     alert("Sai thông tin đăng nhập!");
   }

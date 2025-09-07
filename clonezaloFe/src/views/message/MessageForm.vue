@@ -109,7 +109,7 @@ const openFilePicker = () => {
     <!-- Header -->
     <div class="chat-header">
       <div class="user-info">
-        <img :src="props.receiverAvatar || '/src/assets/image/daidien.png'" alt="avatar" class="user-avatar" />
+        <img :src="props.receiverAvatar || '/src/assets/image/dungnguyen.jpg'" alt="avatar" class="user-avatar" />
         <div class="user-name">{{ displayName }}</div>
       </div>
     </div>
@@ -120,7 +120,7 @@ const openFilePicker = () => {
            :class="['message', msg.userSenderId === userId ? 'sent' : 'received']">
         <div class="message-content flex items-start space-x-2">
           <img v-if="msg.userSenderId !== userId"
-               :src="props.receiverAvatar || '/src/assets/image/daidien.png'"
+               :src="props.receiverAvatar || '/src/assets/image/dungnguyen.jpg'"
                alt="avatar"
                class="user-avatar w-8 h-8 rounded-full" />
           <div>

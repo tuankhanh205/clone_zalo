@@ -121,6 +121,7 @@ onMounted(async () => {
   try {
     const res = await getFriends();
     friends.value = res;
+    console.log(res)
   } catch (err) {
     console.error('Lấy danh sách bạn bè thất bại:', err);
   }

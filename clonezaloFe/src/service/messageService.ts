@@ -19,27 +19,39 @@ export const messageService = {
   /**
    * Gửi tin nhắn (text hoặc file)
    */
- async sendMessage(
-  receiverId: number,
-  content: string,
-  file: File | null = null
-): Promise<MessagesResponse> {
-  const formData = new FormData();
-  // JSON string theo backend mong đợi
-formData.append("request", JSON.stringify({ message: content }));
+  async sendMessage(
+    receiverId: number,
+    content: string,
+    file: File | null = null
+  ): Promise<MessagesResponse> {
+    const formData = new FormData();
+    
+    // Tạo đúng cấu trúc JSON mà backend mong đợi
+    const requestData = { message: content };
+    formData.append("request", JSON.stringify(requestData));
+    
+    if (file) {
+      formData.append("file", file);
+      console.log("File ready to send:", file.name, file.size);
+    }
 
-  if (file) formData.append("file", file);
-
-  // gửi receiverId qua query param vì backend dùng @RequestParam
-  const response = await apiClient.post(
-    `/messages?receiverId=${receiverId}`,
-    formData,
-    { headers: { "Content-Type": "multipart/form-data" } }
-  );
-
-  return response.data;
-},
-
+    try {
+      const response = await apiClient.post(
+        `/messages?receiverId=${receiverId}`,
+        formData,
+        { 
+          headers: { 
+            "Content-Type": "multipart/form-data" 
+          } 
+        }
+      );
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error sending message:", error);
+      throw error;
+    }
+  },
 
   /**
    * Lấy danh sách tin nhắn
