@@ -1,4 +1,4 @@
-package org.example.clonezalo.service.user.friend;
+package org.example.clonezalo.service.cliend.friend;
 
 import org.example.clonezalo.dto.auth.response.friend.FriendResponse;
 

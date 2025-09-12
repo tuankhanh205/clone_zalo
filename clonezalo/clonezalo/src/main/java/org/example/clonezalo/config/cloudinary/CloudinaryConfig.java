@@ -11,11 +11,10 @@ import java.util.Map;
 public class CloudinaryConfig {
     @Bean
     public Cloudinary cloudinary() {
-        Map<String,String> config=new HashMap<>();
-        config.put("cloud_name","dsmnr5drb");
-        config.put("cloud_secret","dywvgfdcKH3YsWeIlAZn-A1uPzU");
-        config.put("cloud_key","242619454497932");
+        Map<String, String> config = new HashMap<>();
+        config.put("cloud_name", "dsmnr5drb");
+        config.put("api_key", "242619454497932");     // sửa từ cloud_key → api_key
+        config.put("api_secret", "dywvgfdcKH3YsWeIlAZn-A1uPzU"); // sửa từ cloud_secret → api_secret
         return new Cloudinary(config);
     }
-
 }

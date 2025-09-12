@@ -12,6 +12,4 @@ import lombok.Setter;
 public class LoginRequest {
     private String phone;
     private String passWord;
-
-
 }

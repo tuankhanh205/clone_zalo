@@ -1,4 +1,4 @@
-package org.example.clonezalo.service.user.mesages;
+package org.example.clonezalo.service.cliend.mesages;
 
 import org.example.clonezalo.dto.auth.response.messages.request.MessagesRequest;
 import org.example.clonezalo.dto.auth.response.messages.response.MessagesResponse;

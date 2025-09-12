@@ -20,6 +20,7 @@ public class Messages extends BaseEntity {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 1000)
     private String content;
 
     private String image_url;
@@ -34,7 +35,7 @@ public class Messages extends BaseEntity {
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_id ")
+    @JoinColumn(name = "receiver_id")
     private User receiver;
 
 

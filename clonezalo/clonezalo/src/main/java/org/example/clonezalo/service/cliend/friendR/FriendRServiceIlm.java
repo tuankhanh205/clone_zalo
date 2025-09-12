@@ -1,4 +1,4 @@
-package org.example.clonezalo.service.user.friendR;
+package org.example.clonezalo.service.cliend.friendR;
 
 import lombok.RequiredArgsConstructor;
 import org.example.clonezalo.base.enumEntity.FriendRStatus;
@@ -91,10 +91,16 @@ public class FriendRServiceIlm implements FriendRService{
     }
 
     public FriendRResponse mapToResponse(FriendR friendR) {
+        StringBuilder stringBuilder=new StringBuilder();
         FriendRResponse friendRResponse=new FriendRResponse();
         friendRResponse.setId(friendR.getId());
         friendRResponse.setReceiveName(friendR.getUserReceiver().getName());
         friendRResponse.setSenderName(friendR.getUserSender().getName());
+        friendRResponse.setImage(friendR.getUserSender().getImage());
+
+        String senAtString=String.valueOf(friendR.getSentAt());
+        senAtString=senAtString.substring(0,10);
+        friendRResponse.setSentAt(senAtString);
         if(friendR.getStatus().equals(FriendRStatus.PENDING)) {
             friendRResponse.setStatus("đang chờ");
         }

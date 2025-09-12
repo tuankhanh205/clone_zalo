@@ -28,22 +28,6 @@ public class User extends BaseEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-//    @ManyToMany
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//    private List<Role> roles;
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private List<User> friends;
-
     //chặn
     @ManyToMany
     @JoinTable(name = "blocked_users ",
@@ -78,6 +62,13 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "userReceiver")
     private List<FriendR> Receiver;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

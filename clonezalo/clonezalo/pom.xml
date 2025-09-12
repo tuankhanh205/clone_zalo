@@ -49,6 +49,12 @@
             <version>0.12.6</version>
             <scope>runtime</scope>
         </dependency>
+<!--        //web socket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->

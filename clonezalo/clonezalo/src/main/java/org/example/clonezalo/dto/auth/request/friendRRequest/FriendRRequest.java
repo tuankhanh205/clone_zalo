@@ -14,5 +14,5 @@ public class FriendRRequest {
    private String sdt;
    private Integer senderId;
    private Integer receiver_id;
-   private FriendRStatus status;
+      private String status;
 }

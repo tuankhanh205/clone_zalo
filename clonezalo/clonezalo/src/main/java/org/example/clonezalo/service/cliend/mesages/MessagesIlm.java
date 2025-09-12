@@ -1,4 +1,4 @@
-package org.example.clonezalo.service.user.mesages;
+package org.example.clonezalo.service.cliend.mesages;
 
 import lombok.RequiredArgsConstructor;
 import org.example.clonezalo.dto.auth.response.messages.request.MessagesRequest;
@@ -61,7 +61,7 @@ public class MessagesIlm implements MessagesService{
         return response;
     }
     public String uploadImage(MultipartFile file) throws IOException {
-        if(file==null||!file.isEmpty()){
+        if(file==null||file.isEmpty()){
             return null;
         }
         String imageUrl=cloudinaryService.uploadFile(file);

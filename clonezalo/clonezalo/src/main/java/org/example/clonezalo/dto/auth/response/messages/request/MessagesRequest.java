@@ -1,2 +1,14 @@
-package org.example.clonezalo.dto.auth.response.messages.request;public class MessagesRequest {
+package org.example.clonezalo.dto.auth.response.messages.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class MessagesRequest {
+    private String message;
 }

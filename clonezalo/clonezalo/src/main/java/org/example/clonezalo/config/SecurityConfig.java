@@ -28,13 +28,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/makefriend").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/user/**").hasRole("USER")
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()
+//                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // cho preflight
+//                        .requestMatchers("/api/auth/**").permitAll()
+//                        .requestMatchers("/api/user/makefriend").permitAll()
+//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/user/**").hasRole("USER")
+//                        .anyRequest().authenticated()
                 )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

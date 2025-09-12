@@ -1,4 +1,4 @@
-package org.example.clonezalo.service.user.friend;
+package org.example.clonezalo.service.cliend.friend;
 
 import lombok.RequiredArgsConstructor;
 import org.example.clonezalo.dto.auth.response.friend.FriendResponse;
@@ -30,6 +30,7 @@ private final UserRepository userRepository;
         FriendResponse friendResponse=new FriendResponse();
         friendResponse.setId(friend.getUser2().getId());
         friendResponse.setName(friend.getUser2().getName());
+        friendResponse.setImage(friend.getUser2().getImage());
         return friendResponse;
     }
 

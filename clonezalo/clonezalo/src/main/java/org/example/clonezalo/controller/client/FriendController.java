@@ -1,8 +1,8 @@
-package org.example.clonezalo.controller.user;
+package org.example.clonezalo.controller.client;
 
 import lombok.RequiredArgsConstructor;
 import org.example.clonezalo.dto.auth.response.friend.FriendResponse;
-import org.example.clonezalo.service.user.friend.FriendService;
+import org.example.clonezalo.service.cliend.friend.FriendService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FriendController {
     private final FriendService friendService;
-    @GetMapping("/friendsList")
+        @GetMapping("/friendsList")
     List<FriendResponse> getFriends(){
         return friendService.getFriends();
     }

@@ -17,6 +17,7 @@ public class AuthResponse {
     @NoArgsConstructor
     @Builder
     public static class UserInfo{
+        private Integer userId;
         private String name;
             private String phone;
             private String role;

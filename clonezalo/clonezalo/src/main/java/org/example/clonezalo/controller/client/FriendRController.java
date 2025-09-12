@@ -1,11 +1,11 @@
-package org.example.clonezalo.controller.user;
+package org.example.clonezalo.controller.client;
 
 import lombok.RequiredArgsConstructor;
 import org.example.clonezalo.base.ResponseData;
 import org.example.clonezalo.dto.auth.request.friendRRequest.FriendRRequest;
 import org.example.clonezalo.dto.auth.response.friendRResponse.FriendRResponse;
 import org.example.clonezalo.exception.NotFoundException;
-import org.example.clonezalo.service.user.friendR.FriendRService;
+import org.example.clonezalo.service.cliend.friendR.FriendRService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

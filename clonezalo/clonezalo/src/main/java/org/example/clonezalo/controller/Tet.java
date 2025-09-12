@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Tet {
-    @GetMapping("/api/user")
+    @GetMapping("/api/userdsd")
     public String a(){
         return "Hello user đến với zalo clone";
     }
