@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.clonezalo.base.BaseEntity;
 import org.example.clonezalo.base.enumEntity.RoleEnum;
+import org.example.clonezalo.base.enumEntity.SexStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 @Entity
@@ -25,6 +27,9 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
     private String phone;
     private String image;
+    @Enumerated(EnumType.STRING)
+    private SexStatus sex;
+    private LocalDateTime dateOfBirth;
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
@@ -69,6 +74,7 @@ public class User extends BaseEntity implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

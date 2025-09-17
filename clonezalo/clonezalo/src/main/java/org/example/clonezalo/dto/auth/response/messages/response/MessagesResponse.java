@@ -16,5 +16,6 @@ public class MessagesResponse {
     private String userReceiverName;
     private String message;
     private String image;
+    private String imageReceiverName;
     private boolean isSeen;
 }

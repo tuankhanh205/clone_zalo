@@ -18,5 +18,6 @@ public class FriendRResponse {
     private String senderName;
     private String receiveName;
     private String status;
+    private String sdt;
     private String sentAt;
 }

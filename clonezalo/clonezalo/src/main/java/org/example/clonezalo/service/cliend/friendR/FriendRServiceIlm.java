@@ -67,7 +67,7 @@ public class FriendRServiceIlm implements FriendRService{
 
         List<Friend> friends=new ArrayList<>();
         for(FriendR friendR:friendRS) {
-            if(friendRRequest.getStatus().equals(FriendRStatus.ACCEPTED)) {
+            if(friendRRequest.getStatus().equals(FriendRStatus.ACCEPTED.name())) {
                 friendR.setStatus(FriendRStatus.ACCEPTED);
                 friend.setUser1(use1);
                 friend.setUser2(use2);
@@ -97,7 +97,7 @@ public class FriendRServiceIlm implements FriendRService{
         friendRResponse.setReceiveName(friendR.getUserReceiver().getName());
         friendRResponse.setSenderName(friendR.getUserSender().getName());
         friendRResponse.setImage(friendR.getUserSender().getImage());
-
+        friendRResponse.setSdt(friendR.getUserSender().getPhone());
         String senAtString=String.valueOf(friendR.getSentAt());
         senAtString=senAtString.substring(0,10);
         friendRResponse.setSentAt(senAtString);

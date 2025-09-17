@@ -58,6 +58,7 @@ public class MessagesIlm implements MessagesService{
         response.setImage( messages.getImage_url());
         response.setUserReceiverName(messages.getReceiver().getName());
         response.setUserSenderName(messages.getSender().getName());
+        response.setImageReceiverName(messages.getSender().getImage());
         return response;
     }
     public String uploadImage(MultipartFile file) throws IOException {
