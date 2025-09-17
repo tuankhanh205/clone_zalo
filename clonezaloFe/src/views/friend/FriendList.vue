@@ -30,10 +30,10 @@
         >
           <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm text-white">
             <img 
-      :src="friend.image" 
-      alt="avatar" 
-      class="w-10 h-10 rounded-full object-cover"
-    />
+              :src="friend.image" 
+              alt="avatar" 
+              class="w-10 h-10 rounded-full object-cover"
+            />
           </div>
           <span>{{ friend.name }}</span>
         </li>
@@ -42,10 +42,7 @@
     </div>
 
     <!-- Dialog thêm bạn -->
-    <div 
-      v-if="showAddFriendDialog" 
-      class="fixed inset-0 flex justify-center items-center z-50"
-    >
+    <div v-if="showAddFriendDialog" class="fixed inset-0 flex justify-center items-center z-50">
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black opacity-40" @click="closeDialog"></div>
 
@@ -82,26 +79,13 @@
             <li 
               v-for="user in searchResults" 
               :key="user.id"
-              class="flex items-center justify-between p-2 bg-gray-50 hover:bg-gray-100 rounded-lg"
+              class="flex items-center justify-between p-2 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer"
+              @click="openUserDialog(user)"
             >
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-white font-bold">
-                     <span>
-      <img :src="user.image" alt="avatar" class="w-8 h-8 rounded-full object-cover" />
-      
-    </span>
-                </div>
+                <img :src="user.image" alt="avatar" class="w-8 h-8 rounded-full object-cover" />
                 <span class="font-medium text-gray-800">{{ user.userName }}</span>
               </div>
-<button 
-  type="button"
-  class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm"
-  @click="addFriend(user.phone)"
->
-  Thêm
-</button>
-
-
             </li>
           </ul>
         </div>
@@ -112,6 +96,85 @@
         </div>
       </div>
     </div>
+
+    <!-- Dialog chi tiết user -->
+<!-- Dialog chi tiết user -->
+<div v-if="showUserDialog" class="fixed inset-0 flex justify-center items-center z-50">
+  <div class="absolute inset-0 bg-black opacity-40" @click="showUserDialog = false"></div>
+
+  <div class="relative bg-white p-6 rounded-xl w-96 shadow-lg z-50">
+    <h3 class="text-xl font-bold mb-4">Thông tin tài khoản</h3>
+    <div class="w-full h-20 bg-amber-200">
+
+      <div class="pt-15 pl-4 flex">
+     <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-white text-2xl font-bold">
+  <template v-if="selectedUser?.image">
+    <img 
+      :src="selectedUser.image" 
+      alt="avatar" 
+      class="w-20 h-20 rounded-full object-cover"
+    />
+  </template>
+  <template v-else>
+    {{ selectedUser?.userName?.charAt(0).toUpperCase() }}
+  </template>
+</div>
+
+<div class="pt-8 pl-2"> <h3>{{ selectedUser?.userName }}</h3></div>
+
+</div>
+ <div class="flex justify-start mt-4 gap-3">
+      <!-- Nếu là người lạ -->
+      <button 
+        v-if="selectedUser?.status === 'Người lạ' || !selectedUser?.status"
+        class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+      @click="addFriend(selectedUser?.phone || '')"
+
+      >
+        Thêm bạn bè
+      </button>
+
+      <!-- Nếu đang chờ -->
+      <button 
+        v-else-if="selectedUser?.status === 'PENDING'"
+        class="px-4 py-1 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+      
+      >
+        Hủy yêu cầu
+      </button>
+
+      <!-- Nếu đã là bạn -->
+      <button 
+        v-else-if="selectedUser?.status === 'ACCEPTED'"
+        class="px-4 py-1 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+       
+      >
+        Hủy bạn bè
+      </button>
+      </div>
+<hr class="mt-2">
+
+    </div>
+    <div class="pt-30">
+   
+    <h4 class="text-x font-bold mb-2">Thông tin cá nhân</h4>
+    <p><b>SĐT:</b> {{ selectedUser?.phone }}</p>
+      <p><b>Giới Tính:</b> {{ selectedUser?.sex }}</p>
+      <p><b>Ngày Sinh:</b> {{ selectedUser?.dateOfBirth }}</p>
+    <p><b>Trạng thái:</b> {{ selectedUser?.status || 'Người lạ' }}</p>
+
+   
+      <!-- Nút đóng -->
+      <button 
+        class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+        @click="showUserDialog = false"
+      >
+        Đóng
+      </button>
+    </div>
+  </div>
+</div>
+
   </div>
 </template>
 
@@ -131,6 +194,10 @@ const searchPhone = ref("");
 const searchResults = ref<UserResponse[]>([]);
 const showAddFriendDialog = ref(false);
 
+// Thêm state cho dialog chi tiết user
+const selectedUser = ref<UserResponse | null>(null);
+const showUserDialog = ref(false);
+
 const friendRs = ref<FriendRResponse | null>(null);
 
 // Emit event chọn bạn
@@ -139,11 +206,17 @@ function selectFriend(friend: FriendResponse) {
   emit("selectFriend", friend);
 }
 
-// Đóng dialog
+// Đóng dialog thêm bạn
 function closeDialog() {
   showAddFriendDialog.value = false;
   searchPhone.value = "";
   searchResults.value = [];
+}
+
+// Hàm mở dialog chi tiết user
+function openUserDialog(user: UserResponse) {
+  selectedUser.value = user;
+  showUserDialog.value = true;
 }
 
 const addFriend = async (sdt: string) => {
@@ -152,15 +225,12 @@ const addFriend = async (sdt: string) => {
     const data = await FriendService.makeFriend({ sdt } as FriendRRequest);
     console.log("Response từ backend:", data);
     friendRs.value = data;
+    showUserDialog.value = false;
     closeDialog();
   } catch (err) {
     console.error("Thêm bạn thất bại:", err);
   }
 };
-
-
-
-
 
 // Hàm tìm kiếm theo số điện thoại
 const timKiem = async (phone: string) => {

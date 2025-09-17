@@ -12,7 +12,7 @@
   v-if="selectedFriend"
   :receiverId="selectedFriend.id"
   :userReceiverName="selectedFriend.name"
-  :receiverAvatar="selectedFriend.avatar"
+  :receiverAvatar="selectedFriend.image"
 />
 
     </div>

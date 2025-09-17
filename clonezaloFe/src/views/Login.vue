@@ -68,7 +68,7 @@ onMounted(() => {
 
     <p class="text-center text-sm text-gray-500 mt-6">
   Chưa có tài khoản?
-  <RouterLink to="/auth/register" class="text-blue-500 hover:underline font-medium">
+  <RouterLink to="/register" class="text-blue-500 hover:underline font-medium">
     Đăng ký ngay
   </RouterLink>
 </p>

@@ -42,6 +42,22 @@ const FriendRService = {
     console.log(response)
     return response.data
 
+  },
+  confirmInvitation:async(friendRRequest:FriendRRequest):Promise<FriendRResponse>=>{
+    try{
+      console.log("==== Gọi makeFriend ====");
+      console.log("URL:", apiClient.defaults.baseURL + "/makefriend");
+      console.log("Token:", localStorage.getItem("token"));
+      console.log("Body gửi đi:", friendRRequest);
+
+        const response=await apiClient.post<FriendRResponse>(`confirmInvitation`,friendRRequest)
+       
+      return response.data
+    }
+    catch(err:any){
+      throw err
+    }
+      
   }
 };
 

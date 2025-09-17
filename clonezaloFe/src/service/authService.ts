@@ -24,7 +24,6 @@ export const register = async (registerRequest: RegisterRequest) => {
     const response = await axios.post(`${API_URL}/register`, registerRequest);
     return response.data.data; // chỉ trả user info
   } catch (error) {
-    console.error("Đăng ký thất bại:", error);
     throw error;
   }
 };

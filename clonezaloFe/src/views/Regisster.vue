@@ -69,7 +69,7 @@ const handleRegister = async () => {
 
     <p class="text-center text-sm text-gray-500 mt-6">
       Đã có tài khoản?
-      <router-link to="/auth/login" class="text-blue-500 hover:underline font-medium">
+      <router-link to="/login" class="text-blue-500 hover:underline font-medium">
         Đăng nhập
       </router-link>
     </p>

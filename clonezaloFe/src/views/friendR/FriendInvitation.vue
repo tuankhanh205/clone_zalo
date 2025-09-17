@@ -22,8 +22,8 @@
             Xin chào! Kết bạn với mình nhé!
           </div>
           <div class="flex justify-end gap-2">
-            <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">Từ chối</button>
-            <button class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">Đồng ý</button>
+            <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600" @click="confirmInvitation(invite.sdt,'DECLINED')">Từ chối</button>
+            <button class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600" @click="confirmInvitation(invite.sdt,'ACCEPTED')">Đồng ý</button>
           </div>
         </div>
       </li>
@@ -37,10 +37,24 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import FriendRService from '../../service/FriendRService';
-import type { FriendRResponse } from '../../types/friendR';
+import type { FriendRRequest, FriendRResponse } from '../../types/friendR';
 
 const friendRes = ref<FriendRResponse[]>([]);
 
+const statusRef=ref('')
+
+const confirmInvitation=async(sdt:string,status:string)=>{
+  try{
+  const response=await FriendRService.confirmInvitation({sdt,status}as FriendRRequest)
+  console.log(response)
+  }
+  catch(err:any){
+    console.log(err)
+   alert("ko thuc hien duoc")
+  }
+  loadFriendInvitation()
+
+}
 const loadFriendInvitation = async () => {
   try {
     const response = await FriendRService.friendInvitation();
@@ -52,6 +66,7 @@ const loadFriendInvitation = async () => {
       friendRes.value = [response];
     }
     console.log('Danh sách lời mời:', friendRes.value);
+     console.log('Processed friendRes:', friendRes.value); 
   } catch (err) {
     console.error('Lỗi tải lời mời:', err);
   }

@@ -8,5 +8,6 @@ export interface MessagesResponse{
     userReceiverName:string
     message:string
     image:string
+    imageReceiverName:string
     seen:boolean
 }

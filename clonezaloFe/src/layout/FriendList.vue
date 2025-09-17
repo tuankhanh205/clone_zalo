@@ -8,8 +8,8 @@
 
     <!-- Cột phải scroll riêng -->
     <div class="w-full h-screen overflow-auto bg-gray-200">
-          <FriendsList v-if="chuyenTrang==='friendsList'"></FriendsList>
-          <friendInvitation v-if="chuyenTrang==='friendInvitation'"></friendInvitation>
+          <FriendsList v-if="chuyenTrang==='friendsList'" ></FriendsList>
+          <friendInvitation v-if="chuyenTrang==='friendInvitation'" ></friendInvitation>
     </div>
  </div>
 </template>
@@ -19,7 +19,7 @@ import { ref } from 'vue';
 import friendInvitation from '../views/friendR/FriendInvitation.vue';
 import FriendsList from '../views/friendR/FriendsList.vue';
 
-const chuyenTrang=ref('friendInvitation')
+const chuyenTrang=ref('friendsList')
 const theodoi=(tentrang:string)=>{
   chuyenTrang.value=tentrang
 }

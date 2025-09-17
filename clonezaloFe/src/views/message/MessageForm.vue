@@ -19,13 +19,15 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 let socket: any = null
 
-// Tên hiển thị header
-const displayName = computed(() => {
-  if (props.userReceiverName) return props.userReceiverName
-  const firstMsg = messages.value.find(msg => msg.userSenderId !== userId)
-  if (firstMsg) return firstMsg.userSenderName
-  return ''
+// script setup
+const latestMessageFromReceiver = computed(() => {
+  return messages.value
+    .filter(msg => msg.userSenderId === props.receiverId)
+    .slice(-1)[0]  // lấy tin nhắn mới nhất
 })
+
+const displayName = computed(() => latestMessageFromReceiver.value?.userSenderName || props.userReceiverName || '')
+
 
 // Scroll xuống cuối
 const scrollToBottom = () => {
@@ -112,6 +114,10 @@ const openFilePicker = () => {
         <img :src="props.receiverAvatar || '/src/assets/image/dungnguyen.jpg'" alt="avatar" class="user-avatar" />
         <div class="user-name">{{ displayName }}</div>
       </div>
+       <div class="call-actions flex gap-2">
+    <button class="call-btn w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200">📞</button>
+    <button class="video-call-btn w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200">🎥</button>
+  </div>
     </div>
 
     <!-- Chat messages -->
@@ -120,7 +126,7 @@ const openFilePicker = () => {
            :class="['message', msg.userSenderId === userId ? 'sent' : 'received']">
         <div class="message-content flex items-start space-x-2">
           <img v-if="msg.userSenderId !== userId"
-               :src="props.receiverAvatar || '/src/assets/image/dungnguyen.jpg'"
+               :src="msg.imageReceiverName"
                alt="avatar"
                class="user-avatar w-8 h-8 rounded-full" />
           <div>
