@@ -1,5 +1,6 @@
 package org.example.clonezalo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import org.example.clonezalo.base.enumEntity.SexStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +31,8 @@ public class User extends BaseEntity implements UserDetails {
     private String image;
     @Enumerated(EnumType.STRING)
     private SexStatus sex;
-    private LocalDateTime dateOfBirth;
+
+    private LocalDate dateOfBirth;
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 

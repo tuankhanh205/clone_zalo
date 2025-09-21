@@ -3,6 +3,7 @@ package org.example.clonezalo.dto.auth.response.user.response;
 import jakarta.persistence.Entity;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,5 +18,5 @@ public class UserResponse {
     private String phone;
     private String status;
     private String sex;
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 }

@@ -1,13 +1,16 @@
 package org.example.clonezalo.service.cliend.user;
 
 import lombok.RequiredArgsConstructor;
+import org.example.clonezalo.dto.auth.request.user.request.UserRequest;
 import org.example.clonezalo.dto.auth.response.user.response.UserResponse;
 import org.example.clonezalo.entity.FriendR;
 import org.example.clonezalo.entity.User;
 import org.example.clonezalo.exception.NotFoundException;
 import org.example.clonezalo.repository.UserRepository;
+import org.example.clonezalo.service.cloudinary.CloudinaryService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserIlm implements UserService{
     private final UserRepository userRepository;
+    private final CloudinaryService cloudinaryService;
     @Override
     public List<UserResponse> finByPhone(String phone) {
         String phoneH= SecurityContextHolder.getContext().getAuthentication().getName();
@@ -25,6 +29,24 @@ public class UserIlm implements UserService{
                 .filter(n->!n.getId().equals(userH.getId())).collect(Collectors.toList());
         return user.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
+
+    @Override
+    public UserResponse finById(Integer id) {
+        User user=userRepository.findById(id).orElseThrow(()->new NotFoundException("ko co user nay"));
+        return mapToResponse(user);
+    }
+
+    @Override
+    public UserResponse update(UserRequest userRequest, MultipartFile image) {
+        String phone=SecurityContextHolder.getContext().getAuthentication().getName();
+        User user=userRepository.findByPhone(phone).orElseThrow(()->new NotFoundException("ko co phone nay"));
+        user.setName(userRequest.getUserName());
+        user.setSex(userRequest.getSex());
+        user.setDateOfBirth(userRequest.getDateOfBirth());
+        user.setImage(cloudinaryService.uploadFile(image));
+        return mapToResponse(userRepository.save(user));
+    }
+
     public UserResponse mapToResponse(User user) {
         String phoneH = SecurityContextHolder.getContext().getAuthentication().getName();
         User userH = userRepository.findByPhone(phoneH)

@@ -78,7 +78,7 @@ public class FriendRServiceIlm implements FriendRService{
                 friendRepository.saveAll(friends);
 
                 friendRRepository.save(friendR);
-            } else if (friendRRequest.getStatus().equals(FriendRStatus.DECLINED)) {
+            } else if (friendRRequest.getStatus().equals(FriendRStatus.DECLINED.name())) {
                 friendR.setStatus(FriendRStatus.DECLINED);
                 friendRRepository.save(friendR);
             }
