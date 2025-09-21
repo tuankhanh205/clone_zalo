@@ -111,7 +111,7 @@ const openFilePicker = () => {
     <!-- Header -->
     <div class="chat-header">
       <div class="user-info">
-        <img :src="props.receiverAvatar || '/src/assets/image/dungnguyen.jpg'" alt="avatar" class="user-avatar" />
+        <img :src="props.receiverAvatar || '/src/assets/image/ảnh đại diện trắng.png'" alt="avatar" class="user-avatar" />
         <div class="user-name">{{ displayName }}</div>
       </div>
        <div class="call-actions flex gap-2">

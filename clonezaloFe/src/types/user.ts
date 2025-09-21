@@ -7,3 +7,9 @@ export interface UserResponse{
     sex:string
     dateOfBirth:Date
 }
+export interface UserRequest{
+    userName:string
+    image:string
+    sex:string
+    dateOfBirth:Date
+}

@@ -30,7 +30,7 @@
         >
           <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm text-white">
             <img 
-              :src="friend.image" 
+              :src="friend.image||'/src/assets/image/ảnh đại diện trắng.png'" 
               alt="avatar" 
               class="w-10 h-10 rounded-full object-cover"
             />
@@ -126,7 +126,7 @@
  <div class="flex justify-start mt-4 gap-3">
       <!-- Nếu là người lạ -->
       <button 
-        v-if="selectedUser?.status === 'Người lạ' || !selectedUser?.status"
+        v-if="selectedUser?.status === 'Người lạ' || selectedUser?.status==='DECLINED'|| !selectedUser?.status"
         class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
       @click="addFriend(selectedUser?.phone || '')"
 

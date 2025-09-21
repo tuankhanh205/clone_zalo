@@ -41,12 +41,13 @@ import type { FriendRRequest, FriendRResponse } from '../../types/friendR';
 
 const friendRes = ref<FriendRResponse[]>([]);
 
-const statusRef=ref('')
+
 
 const confirmInvitation=async(sdt:string,status:string)=>{
   try{
   const response=await FriendRService.confirmInvitation({sdt,status}as FriendRRequest)
   console.log(response)
+
   }
   catch(err:any){
     console.log(err)

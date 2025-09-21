@@ -20,6 +20,10 @@ const userService = {
     const response = await apiClient.get<UserResponse[]>(`/fin-phone/${phone}`);
     return response.data;
   },
+  finbyid:async(id:number):Promise<UserResponse>=>{
+    const data= await apiClient.get<UserResponse>(`/${id}`)
+    return data.data
+  }
 };
 
 export default userService;
