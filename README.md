@@ -6,7 +6,7 @@ Cơ sở dữ liệu: MySQL
 
 Ngôn ngữ frontend: JavaScript
 
-Framework frontend: Vue.js 3
+Framework frontend: Vue.ts
 
 CSS: Tailwind CSS
-![Uploading image.png…]()
+
