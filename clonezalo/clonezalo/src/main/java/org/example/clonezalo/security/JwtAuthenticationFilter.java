@@ -26,6 +26,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 🔍 Lấy Authorization header
         final String authHeader = request.getHeader("Authorization");
 
+        String path = request.getServletPath();
+        if(path.startsWith("/ws")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // ❌ Nếu không có Bearer token thì bỏ qua
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);

@@ -2,6 +2,7 @@ package org.example.clonezalo.service.auth;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.clonezalo.base.enumEntity.SexStatus;
 import org.example.clonezalo.exception.NotFoundException;
 import org.example.clonezalo.base.enumEntity.RoleEnum;
 import org.example.clonezalo.dto.auth.request.LoginRequest;
@@ -76,6 +77,7 @@ public class AuthServiceImpl implements AuthService{
         user.setPhone(registerRequest.getPhone());
         user.setPassword(encodePassWord);
         user.setName(registerRequest.getName());
+        user.setSex(SexStatus.Chua_cap_nhat);
         user.setRole(RoleEnum.USER);
         return userRepository.save(user);
     }
