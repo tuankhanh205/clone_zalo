@@ -18,7 +18,7 @@
 
         <div v-if="showDropdown" class="absolute left-full bottom-0 bg-white border rounded-lg shadow-lg w-32 z-50"
           @click.stop>
-          <RouterLink to="/dangxuat" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" @click="closeDropdown">
+          <RouterLink to="/dangxuat" class="block px-4 py-2 hover:bg-gray-100 text-gray-700"@click.native.prevent="logout" @click="closeDropdown">
             Đăng xuất
           </RouterLink>
           <RouterLink to="#" class="block px-4 py-2 hover:bg-gray-100 text-gray-700" @click.prevent="openProfile">
@@ -152,6 +152,16 @@ import userService from "../service/user";
 const showProfile = ref(false);
 const showUpdateForm = ref(false)
 
+function logout() {
+  // 1. Xóa token và thông tin user
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('userId');
+  sessionStorage.removeItem('currentTab');
+
+  // 2. Chuyển về trang login
+  window.location.href = '/login'; // hoặc router.replace({ name: 'login' })
+}
+
 function openUpdateForm() {
   showUpdateForm.value = true
 }
@@ -170,7 +180,7 @@ function closeProfile() {
 }
 
 const userResponse = ref<UserResponse | null>(null)
-const userIdStr = localStorage.getItem("userId")
+const userIdStr = sessionStorage.getItem("userId")
 const userId = userIdStr ? Number(userIdStr) : undefined;
 const getUser = async () => {
   try {

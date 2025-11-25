@@ -15,9 +15,9 @@ const handleLogin = async () => {
     });
 
     // Lưu token trước khi chuyển trang
-  localStorage.setItem("token", res.accessToken);
-     localStorage.setItem("userId", res.user.userId.toString());
-
+  sessionStorage.setItem("token", res.accessToken);
+     sessionStorage.setItem("userId", res.user.userId.toString());
+ console.log(res.accessToken)
     // Chuyển hướng sang Contacts
     await router.push({ name: 'gioithieu' });
   } catch (err) {
@@ -28,7 +28,7 @@ const handleLogin = async () => {
 
 // Kiểm tra đăng nhập khi trang load
 onMounted(() => {
-  if (localStorage.getItem("token")) {
+  if (sessionStorage.getItem("token")) {
     router.replace({ name: 'Contacts' }); // Nếu đã login thì chuyển hướng luôn
   }
 });

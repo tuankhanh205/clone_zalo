@@ -9,7 +9,7 @@ export const login = async (loginRequest: LoginRequest): Promise<AuthResponse> =
     const response = await axios.post(`${API_URL}/login`, loginRequest);
 
     // Lưu accessToken vào localStorage
-    localStorage.setItem("token", response.data.data.accessToken);
+      
 
     return response.data.data; // trả về AuthResponse cho component
   } catch (error) {

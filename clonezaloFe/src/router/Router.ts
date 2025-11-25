@@ -46,7 +46,7 @@ const router = createRouter({
 
 // Hàm kiểm tra token có hợp lệ không
 function isValidToken() {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (!token) return false;
   
   try {

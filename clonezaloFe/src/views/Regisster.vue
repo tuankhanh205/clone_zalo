@@ -7,7 +7,11 @@ const router = useRouter();
 const name = ref("");
 const phone = ref("");
 const password = ref("");
+const showPassword=ref(false);
 
+const togglePassword = () => {
+  showPassword.value = !showPassword.value;
+};
 const handleRegister = async () => {
   try {
     await register({
@@ -17,11 +21,19 @@ const handleRegister = async () => {
     });
 
     alert("Đăng ký thành công! Vui lòng đăng nhập.");
-    router.push({ name: "Login" });
-  } catch (err) {
-    console.error(err);
-    alert("Đăng ký thất bại! Vui lòng thử lại.");
+    router.push({ name: "login" });
+  } catch (err: any) {
+  console.error(err);
+
+  // Nếu AxiosError có response từ backend
+  if (err.response && err.response.status === 400) {
+    alert(err.response.data.data.name||err.response.data.data.phone||err.response.data.data.password); // thông báo lỗi cụ thể từ backend
   }
+  else if (err.response && err.response.status === 404) {
+    alert(err.response.data.message); // thông báo lỗi cụ thể từ backend
+  }
+}
+
 };
 
 </script>
@@ -51,14 +63,30 @@ const handleRegister = async () => {
     </div>
 
     <div class="mb-6">
-      <label class="block mb-2 text-sm font-semibold text-gray-600">Mật khẩu</label>
-      <input
-        v-model="password"
-        type="password"
-        placeholder="••••••••"
-        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
-      />
-    </div>
+  <label class="block mb-2 text-sm font-semibold text-gray-600">Mật khẩu</label>
+
+  <!-- Bọc input + icon trong div relative -->
+  <div class="relative">
+    <input
+      v-model="password"
+      :type="showPassword ? 'text' : 'password'"
+      placeholder="••••••••"
+      class="w-full px-4 py-3 pr-12 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"
+    />
+
+    <!-- Icon con mắt -->
+    <button
+      type="button"
+      @click="togglePassword"
+      class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+    >
+      <span v-if="showPassword">🙈</span>
+      <span v-else>👁️</span>
+    </button>
+  </div>
+</div>
+
+    
 
     <button
       @click="handleRegister"

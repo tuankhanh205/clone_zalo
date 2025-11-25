@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, nextTick, computed, onMounted, onBeforeUnmount } from 'vue'
 import { messageService } from '../../service/messageService'
-import { connectSocket,getSocket } from '../../service/socket/socketService'
+import { connectSocket, sendMessageSocket, disconnectSocket } from '../../service/socket/socketService'
 import type { MessagesResponse } from '../../types/messages'
 
 const props = defineProps<{
@@ -11,25 +11,21 @@ const props = defineProps<{
 }>()
 
 const messages = ref<MessagesResponse[]>([])
-const userId = Number(localStorage.getItem('userId'))
+const userId = Number(sessionStorage.getItem('userId'))
 const chatContainer = ref<HTMLElement | null>(null)
 const newMessage = ref('')
 const newFile = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 
-let socket: any = null
 
-// script setup
 const latestMessageFromReceiver = computed(() => {
   return messages.value
     .filter(msg => msg.userSenderId === props.receiverId)
-    .slice(-1)[0]  // lấy tin nhắn mới nhất
+    .slice(-1)[0]
 })
 
 const displayName = computed(() => latestMessageFromReceiver.value?.userSenderName || props.userReceiverName || '')
 
-
-// Scroll xuống cuối
 const scrollToBottom = () => {
   if (chatContainer.value) chatContainer.value.scrollTop = chatContainer.value.scrollHeight
 }
@@ -49,61 +45,59 @@ const loadMessages = async () => {
 // Watch khi đổi friend
 watch(() => props.receiverId, () => loadMessages(), { immediate: true })
 
-// Mount: kết nối socket
+// Mount: kết nối STOMP
+let stomp: any = null;
 onMounted(() => {
-  socket = connectSocket()
-  if (!socket) return
-
-  socket.on('newMessage', (msg: MessagesResponse) => {
-    if (msg.userSenderId === props.receiverId || msg.userReceiverId === props.receiverId) {
-      messages.value.push(msg)
-      nextTick(() => scrollToBottom())
-    }
-  })
+  if (!stomp) {
+    stomp = connectSocket(userId, (msg: MessagesResponse) => {
+      console.log('Received via STOMP:', msg)
+      if (msg.userSenderId === props.receiverId || msg.userReceiverId === props.receiverId) {
+        messages.value.push(msg)
+        nextTick(() => scrollToBottom())
+      }
+    })
+  }
 })
+
 
 onBeforeUnmount(() => {
-  if (socket) socket.off('newMessage')
-})
+  disconnectSocket();
+});
 
 // Gửi tin nhắn
 const sendMessage = async () => {
-  if (!newMessage.value.trim() && !newFile.value) return
+  if (!newMessage.value.trim() && !newFile.value) return;
 
   try {
-    // Gọi sendMessage từ service, truyền file luôn
     const sent = await messageService.sendMessage(
       props.receiverId,
       newMessage.value,
       newFile.value
-    )
+    );
 
-    // Gửi socket
-    if (socket) socket.emit('sendMessage', sent)
 
-    // Push vào UI
-    messages.value.push(sent)
-    newMessage.value = ''
-    newFile.value = null
-    if (fileInput.value) fileInput.value.value = ''
-    await nextTick()
-    scrollToBottom()
+
+    messages.value.push(sent);
+    newMessage.value = '';
+    newFile.value = null;
+    if (fileInput.value) fileInput.value.value = '';
+    await nextTick();
+    scrollToBottom();
   } catch (err) {
-    console.error('Gửi tin nhắn lỗi:', err)
+    console.error('Gửi tin nhắn lỗi:', err);
   }
-}
-
+};
 
 // Chọn file
 const handleFileChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  if (target.files && target.files[0]) newFile.value = target.files[0]
-}
+  const target = e.target as HTMLInputElement;
+  if (target.files && target.files[0]) newFile.value = target.files[0];
+};
 
 // Mở file picker
 const openFilePicker = () => {
-  if (fileInput.value) fileInput.value.click()
-}
+  if (fileInput.value) fileInput.value.click();
+};
 </script>
 
 <template>
@@ -126,7 +120,7 @@ const openFilePicker = () => {
            :class="['message', msg.userSenderId === userId ? 'sent' : 'received']">
         <div class="message-content flex items-start space-x-2">
           <img v-if="msg.userSenderId !== userId"
-               :src="msg.imageReceiverName"
+               :src="msg.imageReceiverName||'/src/assets/image/ảnh đại diện trắng.png'"
                alt="avatar"
                class="user-avatar w-8 h-8 rounded-full" />
           <div>
